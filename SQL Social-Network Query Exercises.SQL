@@ -68,3 +68,16 @@ WHERE H2.ID NOT IN (SELECT ID2 FROM Friend WHERE ID1 = H1.ID);
 -- Q8. Find the difference between the number of students in the school and the number of different first names.
 SELECT COUNT(*) - COUNT(DISTINCT name)
 FROM Highschooler;
+
+-- Q9. Find the name and grade of all students who are liked by more than one other student.
+SELECT name, grade
+FROM Highschooler H1
+INNER JOIN Likes ON H1.ID = Likes.ID2
+GROUP BY name
+HAVING COUNT(name) > 1;
+
+SELECT name, grade
+FROM Highschooler H1, Likes
+WHERE H1.ID = Likes.ID2
+GROUP BY name
+HAVING COUNT(name) > 1;
