@@ -66,3 +66,10 @@ FROM Movie M1
 INNER JOIN Rating USING(mID)
 GROUP BY mID
 HAVING average = (SELECT MAX(average_stars) FROM (SELECT title, AVG(stars) AS average_stars FROM Movie INNER JOIN Rating USING(mID) GROUP BY mID));
+
+-- Q12. For each director, return the director's name together with the title(s) of the movie(s) they directed that received the highest rating among all of their movies, and the value of that rating. Ignore movies whose director is NULL.
+SELECT director, title, MAX(stars)
+FROM Movie
+INNER JOIN Rating USING(mID)
+WHERE director IS NOT NULL
+GROUP BY director;
