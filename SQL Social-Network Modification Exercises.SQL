@@ -12,3 +12,7 @@ English: The student with ID1 likes the student with ID2. Liking someone is not 
 -- Q1. It's time for the seniors to graduate. Remove all 12th graders from Highschooler.
 DELETE FROM Highschooler
 WHERE grade = 12;
+
+-- Q2. If two students A and B are friends, and A likes B but not vice-versa, remove the Likes tuple.
+DELETE FROM Likes
+WHERE ID1 IN (SELECT Likes.ID1 FROM Friend F INNER JOIN Likes ON F.ID1 = Likes.ID1 AND F.ID2 = Likes.ID2) AND ID2 NOT IN (SELECT Likes.ID1 FROM Friend F INNER JOIN Likes ON F.ID1 = Likes.ID1 AND F.ID2 = Likes.ID2);
